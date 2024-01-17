@@ -3,13 +3,17 @@
     <%- include ('partials/head.ejs') %>
 <body class="container">
     <%- include ('partials/header.ejs') %>
-    <!--<h1><%= title %></h1>-->
 
     <%if(professors.length){ %>
         <% professors.forEach(function(professor) { %>
             <div class="panel panel-primary" style="margin: 3px;">
-                <div class="panel-heading" style="background-color: rgb(21, 21, 243); color: white; border-radius: 5px;">
+                <div class="panel-heading" style="background-color: rgb(21, 21, 243); color: white; border-radius: 5px; display: flex; justify-content: space-between; align-items: center;">
                     <%= professor.name %>
+                    <div>
+                        <a href="/new-professor?name=<%= professor.name %>&description=<%= professor.description %>" class="btn btn-primary pull-right" style="background-color: gray;">Modify</a>
+                        <a href="/" class="btn btn-primary pull-right" style="background-color: red;">Delete</a>
+                    </div>
+                    
                 </div>
                 <div class="panel-body" style="border-radius: 5px; border: 1px solid #000;">
                     <%= professor.description %>
@@ -17,6 +21,12 @@
             </div>
        <% }) %>
     <% } %>
-        
+
+    <!--
+    <% for(var i=1; i<5; i++) { %>
+        <p> Vamos por la vuelta <%= i %> </p>
+    <% } %>
+    -->
+
 </body>
 </html>

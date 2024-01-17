@@ -25,6 +25,7 @@ app.set('view engine', 'ejs')
 app.use(morgan('dev'))
 app.use(bp.json())
 app.use(bp.urlencoded({extended:false}))
+app.use(express.static('public'))
 
 // Set the router
 app.use('/', require(path.join(__dirname, 'routes/router') ))

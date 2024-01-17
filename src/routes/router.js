@@ -25,18 +25,20 @@ router.get('/', (req, res) => {
 
 router.get('/new-professor', (req, res) => {
     res.render('new-professor', {
-        title: "New Proffesor"
+        title: "Create/Modify teacher",
+        name: req.query.name,
+        description: req.query.description
     })
 })
 
 router.post('/new-professor', (req, res) => {
-    if(!req.body.title || !req.body.body){
+    if(!req.body.name || !req.body.description){
         res.send(400).send('Entries must have a prof name and description')
     }
 
     let newProfessor = {
-        name: req.body.title,
-        description: req.body.body
+        name: req.body.name,
+        description: req.body.description
     }
 
     if(jsonData != null){
@@ -57,7 +59,14 @@ router.post('/new-professor', (req, res) => {
             res.redirect('/')
         });
     }
-    
+})
+
+router.delete('/', (req, res) => {
+    // Obtain the desired professor.
+
+    // Remove it from json.
+
+    // Redirect to main route.
 })
 
 // Using cjs in this case
