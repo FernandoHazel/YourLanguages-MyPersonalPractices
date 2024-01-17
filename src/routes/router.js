@@ -94,8 +94,8 @@ router.put('/teacher-form/:id/edit', (req, res) => {
 
 router.delete('/teacher-form/:id/delete', (req, res) => {
     const data = readData()
-    const id = parseInt(req.params.id)
-    const teacherIndex = data.professors.findIndex((teacher) => teacher.id === id)
+    console.log(req.params.id)
+    const teacherIndex = data.professors.findIndex((teacher) => teacher.id == req.params.id)
     data.professors.splice(teacherIndex, 1)
     writeData(data)
     res.redirect('/')

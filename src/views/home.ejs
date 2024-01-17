@@ -10,10 +10,11 @@
                 <div class="panel-heading" style="background-color: rgb(21, 21, 243); color: white; border-radius: 5px; display: flex; justify-content: space-between; align-items: center;">
                     <%= professor.name %>
                     <div>
+                        <%= professor.id %>
                         <a href="/teacher-form/<%= professor.id %>/edit" class="btn btn-primary pull-right" style="background-color: gray;">Modify</a>
-                        <form action="/teacher-form/<%= professor.id %>/delete" method="POST">
+                        <form action="/teacher-form/<%= professor.id %>/delete?_method=DELETE" method="POST" class="btn btn-primary pull-right" style="background-color: red;">
                             <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit" class="btn btn-primary pull-right" style="background-color: red;">Delete</button>
+                            <button type="submit">Delete</button>
                         </form>
                     </div>
                     
