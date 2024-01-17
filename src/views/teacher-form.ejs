@@ -7,7 +7,7 @@
 
     <div class="col-xs-8 col-xs-offset-2">
         <h2 class="text-center">
-            <% if(name == null){ %>
+            <% if( id == null){ %>
                 Create a new teacher
             <% } else { %>
                 Modify teacher
@@ -15,23 +15,29 @@
             
         </h2>
 
-        <form method="post">
+        <!--Verify if we are modifying or creating an element-->
+        <form method="post" 
+        
+        <% if (id == null ){ %>
+            action="/teacher-form/create"
+        <% }else{ %>
+            action="/teacher-form/<%= id %>/edit?_method=PUT"
+        <% } %>
+        
+        >
 
             <div class="form-group">
+                <%if (name == null ){name = ""}%>
                 <label for="title">Name:</label>
-                <input 
-                type="text" 
+                <textarea
+                class="form-control"
                 name="name" 
                 id="name"
-                class="form-control"
                 placeholder="Teacher's name"
-
-                <%if (name == null ){name = ""}%>
-                value= <%= name %>
-                >
+                cols="30" 
+                rows="1"><%= name %></textarea>
+                
             </div>
-
-            
 
             <div class="form-group">
                 <label for="description">Description:</label>
@@ -49,7 +55,16 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary">
+                <input 
+                type="submit"
+                 value= 
+                 <% if ( id == null ){ %>
+                    Create
+                <% }else{ %>
+                    Update
+                <% } %>
+
+                 class="btn btn-primary">
             </div>
         </form>
     </div>

@@ -10,8 +10,11 @@
                 <div class="panel-heading" style="background-color: rgb(21, 21, 243); color: white; border-radius: 5px; display: flex; justify-content: space-between; align-items: center;">
                     <%= professor.name %>
                     <div>
-                        <a href="/new-professor?name=<%= professor.name %>&description=<%= professor.description %>" class="btn btn-primary pull-right" style="background-color: gray;">Modify</a>
-                        <a href="/" class="btn btn-primary pull-right" style="background-color: red;">Delete</a>
+                        <a href="/teacher-form/<%= professor.id %>/edit" class="btn btn-primary pull-right" style="background-color: gray;">Modify</a>
+                        <form action="/teacher-form/<%= professor.id %>/delete" method="POST">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="btn btn-primary pull-right" style="background-color: red;">Delete</button>
+                        </form>
                     </div>
                     
                 </div>

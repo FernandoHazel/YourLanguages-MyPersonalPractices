@@ -5,6 +5,10 @@
 const express = require('express')
 const app = express()
 
+// Override form methods
+const methodOverride = require('method-override')
+app.use(methodOverride('_method'))
+
 // Require path to work with routes
 const path =require('node:path')
 

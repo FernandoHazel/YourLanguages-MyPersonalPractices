@@ -1,36 +1,19 @@
 {
   "professors": [
     {
+      "id": "1705530374565-355",
       "name": "Fernando",
-      "description": "Code teacher"
+      "description": "Programming"
     },
     {
-      "name": "Jing",
-      "description": "English teacher"
+      "id": "1705530391865-106",
+      "name": "Ema",
+      "description": "English"
     },
     {
-      "name": "Dan",
-      "description": "Videogames teacher"
-    },
-    {
-      "name": "Alex",
-      "description": "I am a math professor"
-    },
-    {
-      "name": "Julio",
-      "description": "New one"
-    },
-    {
-      "name": "Julio",
-      "description": "New one"
-    },
-    {
-      "name": "Julio",
-      "description": "f"
-    },
-    {
-      "name": "Fernando",
-      "description": "Code teacher FF"
+      "id": "1705530790374-444",
+      "name": "Evo",
+      "description": "Dictatorship classes"
     }
   ]
 }
