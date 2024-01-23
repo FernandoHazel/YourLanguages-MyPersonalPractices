@@ -22,6 +22,7 @@ const bp = require('body-parser')
 // paths syntax between different OS
 // Whit this I am setting the views folder
 app.set('views', path.join(__dirname, 'views'))
+console.log(path.join(__dirname, 'views'))
 
 // Seting ejs as views engine
 app.set('view engine', 'ejs')
