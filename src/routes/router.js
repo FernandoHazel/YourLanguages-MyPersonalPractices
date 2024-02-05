@@ -3,7 +3,6 @@ const router = express.Router()
 const fs = require('node:fs')
 const path = require('path')
 
-const multer  = require('multer')
 const upload = require('../middlewares/upload')
 
 // Import the middlewares
@@ -28,7 +27,8 @@ router.get('/', (req, res) => {
     })
 })
 
-router.get('/teacher-form', how, (req, res) => {
+// Create new
+router.get('/teacher-form', (req, res) => {
     res.render('teacher-form', {
         title: "Teacher form",
         name: null,
@@ -49,7 +49,8 @@ router.post('/teacher-form/create', upload.single('avatar'), (req, res) => {
     let newProfessor = {
         id: generateUniqueId(),
         name: req.body.name,
-        description: req.body.description
+        description: req.body.description,
+        imagePath: req.file.path
     }
 
     if(data != null){
@@ -61,7 +62,7 @@ router.post('/teacher-form/create', upload.single('avatar'), (req, res) => {
     }
 })
 
-router.get('/teacher-form/:id/edit', (req, res) => {
+router.get('/teacher-form/:id/edit',  (req, res) => {
     const data = readData()
     //console.log('data: ' + JSON.stringify(data, null, 2))
 

@@ -1,12 +1,13 @@
 const multer  = require('multer')
 
-// Make this a middleware
+// Storage file on disk
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, 'uploads/')
     },
     filename: function (req, file, cb) {
-      cb(null, file.originalname)
+      const uniqueFileName = `${new Date().getTime()}_${file.originalname}`;
+      cb(null, uniqueFileName)
     }
   })
   

@@ -1,12 +1,15 @@
 const sup = (req, res, next) => {
-    console.log(req.method)
-    console.log("sup")
+    console.log("Application Middleware")
 
     next()
 }
 
 const how = (req, res, next) => {
-    console.log("How you doin")
+    console.log("Route middleware")
+
+    // go to create route
+    res.redirect('/teacher-form')
+
 
     next()
 }
