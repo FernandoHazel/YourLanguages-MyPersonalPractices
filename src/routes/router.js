@@ -3,9 +3,11 @@ const router = express.Router()
 const fs = require('node:fs')
 const path = require('path')
 
+const multer  = require('multer')
+const upload = require('../middlewares/upload')
+
 // Import the middlewares
 const {how} = require('../middlewares/middle')
-
 
 
 // Take the json file path.
@@ -37,7 +39,7 @@ router.get('/teacher-form', how, (req, res) => {
 
 
 // Create new teacher
-router.post('/teacher-form/create', (req, res) => {
+router.post('/teacher-form/create', upload.single('avatar'), (req, res) => {
     const data = readData()
 
     if(!req.body.name || !req.body.description){

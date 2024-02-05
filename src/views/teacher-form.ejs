@@ -22,6 +22,8 @@
         <% }else{ %>
             action="/teacher-form/<%= id %>/edit?_method=PUT"
         <% } %>
+
+        enctype="multipart/form-data"
         
         >
 
@@ -52,6 +54,8 @@
                 ><%= description %></textarea>
 
             </div>
+
+            <input type="file" name="avatar" />
 
             <div class="form-group">
                 <input 
