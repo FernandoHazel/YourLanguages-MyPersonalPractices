@@ -32,8 +32,19 @@ app.use(bp.json())
 app.use(bp.urlencoded({extended:false}))
 app.use(express.static('public'))
 
+// Import the middlewares
+const {sup} = require('./middlewares/middle')
+
+// Application middleware
+app.use(sup)
+
 // Set the router
-app.use('/', require(path.join(__dirname, 'routes/router') ))
+app.use('/', require(path.join(__dirname, 'routes/router')))
+
+app.use((req, res, next) => {
+    res.sendStatus(404)
+    next()
+})
 
 //--------------------------------------------------------
 // Set a default port in case we didn't configure anything

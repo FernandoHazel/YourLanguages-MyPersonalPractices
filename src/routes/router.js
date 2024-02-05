@@ -3,6 +3,11 @@ const router = express.Router()
 const fs = require('node:fs')
 const path = require('path')
 
+// Import the middlewares
+const {how} = require('../middlewares/middle')
+
+
+
 // Take the json file path.
 const jsonFilePath = path.join(__dirname, '../../public/data/data.json');
 
@@ -11,17 +16,17 @@ function readData(){
 }
 
 router.get('/', (req, res) => {
-    var data = readData()
 
     // Make sure to add a default value in the case jsonData comes empty
-    const professorsData = data.professors || []
+    const professorsData = readData().professors || []
+
     res.render('home', {
         title: "Home",
         professors: professorsData
     })
 })
 
-router.get('/teacher-form', (req, res) => {
+router.get('/teacher-form', how, (req, res) => {
     res.render('teacher-form', {
         title: "Teacher form",
         name: null,
@@ -103,13 +108,13 @@ router.delete('/teacher-form/:id/delete', (req, res) => {
 
 function writeData(data){
     // Convert the updated data back to JSON
-    const updatedJsonData = JSON.stringify(data, null, 2);
+    const updatedJsonDataString = JSON.stringify(data, null, 2);
 
     // Write the updated data back to the JSON file
-    fs.writeFile(jsonFilePath, updatedJsonData, 'utf8', (err) => {
+    fs.writeFile(jsonFilePath, updatedJsonDataString, 'utf8', (err) => {
         if (err) {
-        console.error('Error writing file:', err);
-        return;
+            console.error('Error writing file:', err);
+            return;
         }
 
         console.log('Data added to the JSON file successfully.');
