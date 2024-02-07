@@ -46,11 +46,17 @@ router.post('/teacher-form/create', upload.single('avatar'), (req, res) => {
         res.send(400).send('Entries must have a prof name and description')
     }
 
+    // Verify that the file string is not null
+    let imagePath = req.file ? req.file.path : '';
+
+    // Delete the "public" word
+    imagePath = imagePath.replace(/^public\\/, '');
+
     let newProfessor = {
         id: generateUniqueId(),
         name: req.body.name,
         description: req.body.description,
-        imagePath: req.file.path
+        imagePath: imagePath
     }
 
     if(data != null){
@@ -81,7 +87,7 @@ router.get('/teacher-form/:id/edit',  (req, res) => {
 })
 
 // Modify an already existing teacher
-router.put('/teacher-form/:id/edit', (req, res) => {
+router.put('/teacher-form/:id/edit', upload.single('avatar'), (req, res) => {
     const data = readData()
 
     if(!req.body.name || !req.body.description){
@@ -93,6 +99,31 @@ router.put('/teacher-form/:id/edit', (req, res) => {
         if( teacher.id == req.params.id ){
             teacher.name = req.body.name
             teacher.description = req.body.description
+
+            // Modify the teacher imagePath only if it is not null
+            if (req.file != null){
+
+                //Find and delete the previous file
+                const filePath = path.join(__dirname, `../../public/${teacher.imagePath}`)
+
+                // Delete the image file
+                fs.unlink(filePath, (err) => {
+                    if (err) {
+                    console.error(`Error deleting file: ${err.message}`);
+                    } else {
+                    console.log(`File deleted successfully`);
+                    }
+                });
+
+                // Verify that the file string is not null
+                let imagePath = req.file.path
+
+                // Delete the "public" word
+                imagePath = imagePath.replace(/^public\\/, '');
+
+                teacher.imagePath = imagePath
+            }
+            
         }
     });
 
@@ -102,9 +133,24 @@ router.put('/teacher-form/:id/edit', (req, res) => {
 
 router.delete('/teacher-form/:id/delete', (req, res) => {
     const data = readData()
-    console.log(req.params.id)
+
+    // Delete the teacher in the array
     const teacherIndex = data.professors.findIndex((teacher) => teacher.id == req.params.id)
+
+    const filePath = path.join(__dirname, `../../public/${data.professors[teacherIndex].imagePath}`) 
+
+    // Delete the image file
+    fs.unlink(filePath, (err) => {
+        if (err) {
+        console.error(`Error deleting file: ${err.message}`);
+        } else {
+        console.log(`File deleted successfully`);
+        }
+    });
+
     data.professors.splice(teacherIndex, 1)
+
+    // Update the json file
     writeData(data)
     res.redirect('/')
 })

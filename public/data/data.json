@@ -1,14 +1,3 @@
 {
-  "professors": [
-    {
-      "id": "1707143277020-946",
-      "name": "Fernando",
-      "description": "Teacher"
-    },
-    {
-      "id": "1707144948552-314",
-      "name": "f",
-      "description": "f"
-    }
-  ]
+  "professors": []
 }
