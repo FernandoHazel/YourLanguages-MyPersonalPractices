@@ -48,9 +48,12 @@ router.post('/teacher-form/create', upload.single('avatar'), (req, res) => {
 
     // Verify that the file string is not null
     let imagePath = req.file ? req.file.path : '';
+    console.log('req.file->'+req.file)
+    console.log('req.file.path->'+req.file.path)
 
     // Delete the "public" word
-    imagePath = imagePath.replace(/^public\\/, '');
+    if (imagePath != '')
+        imagePath = imagePath.replace(/^public\\/, '');
 
     let newProfessor = {
         id: generateUniqueId(),

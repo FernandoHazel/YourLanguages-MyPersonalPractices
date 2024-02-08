@@ -1,3 +1,10 @@
 {
-  "professors": []
+  "professors": [
+    {
+      "id": "1707405712452-954",
+      "name": "Fer",
+      "description": "teacher",
+      "imagePath": "uploads\\1707405712443_Yo.jpg"
+    }
+  ]
 }
