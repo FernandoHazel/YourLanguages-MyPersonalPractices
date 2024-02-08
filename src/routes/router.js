@@ -48,8 +48,6 @@ router.post('/teacher-form/create', upload.single('avatar'), (req, res) => {
 
     // Verify that the file string is not null
     let imagePath = req.file ? req.file.path : '';
-    console.log('req.file->'+req.file)
-    console.log('req.file.path->'+req.file.path)
 
     // Delete the "public" word
     if (imagePath != '')
@@ -106,6 +104,8 @@ router.put('/teacher-form/:id/edit', upload.single('avatar'), (req, res) => {
             // Modify the teacher imagePath only if it is not null
             if (req.file != null){
 
+                // Delete previous image------
+
                 //Find and delete the previous file
                 const filePath = path.join(__dirname, `../../public/${teacher.imagePath}`)
 
@@ -118,6 +118,8 @@ router.put('/teacher-form/:id/edit', upload.single('avatar'), (req, res) => {
                     }
                 });
 
+                // Upload new image------
+
                 // Verify that the file string is not null
                 let imagePath = req.file.path
 
@@ -126,7 +128,6 @@ router.put('/teacher-form/:id/edit', upload.single('avatar'), (req, res) => {
 
                 teacher.imagePath = imagePath
             }
-            
         }
     });
 
@@ -140,6 +141,7 @@ router.delete('/teacher-form/:id/delete', (req, res) => {
     // Delete the teacher in the array
     const teacherIndex = data.professors.findIndex((teacher) => teacher.id == req.params.id)
 
+    // Take the file path to delete the file
     const filePath = path.join(__dirname, `../../public/${data.professors[teacherIndex].imagePath}`) 
 
     // Delete the image file
@@ -151,6 +153,7 @@ router.delete('/teacher-form/:id/delete', (req, res) => {
         }
     });
 
+    // Delete from the array
     data.professors.splice(teacherIndex, 1)
 
     // Update the json file
