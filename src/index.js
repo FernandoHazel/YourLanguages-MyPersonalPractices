@@ -5,6 +5,8 @@
 const express = require('express')
 const app = express()
 
+const session = require('express-session')
+
 // Override form methods
 const methodOverride = require('method-override')
 app.use(methodOverride('_method'))
@@ -32,11 +34,17 @@ app.use(bp.urlencoded({extended:false}))
 app.use(express.static(path.join(__dirname, '../public')))
 console.log(path.join(__dirname, '../public'))
 
+app.use(session({
+    secret: 'my_secret',
+    resave: false,
+    saveUninitialized: true,
+  }))
+
 // Import the middlewares
 const {sup} = require('./middlewares/middle')
 
-// Application middleware
-app.use(sup)
+// Application middlewares
+//app.use(sup)
 
 // Set the router
 app.use('/', require(path.join(__dirname, 'routes/router')))

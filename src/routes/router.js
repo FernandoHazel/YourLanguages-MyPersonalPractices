@@ -7,40 +7,45 @@ const upload = require('../middlewares/upload')
 
 // Import the middlewares
 const {how} = require('../middlewares/middle')
+const checkSession = require('../middlewares/check-session')
 
 
 // Take the json file path.
-const jsonFilePath = path.join(__dirname, '../../public/data/data.json');
+const teachersFilePath = path.join(__dirname, '../../public/data/data.json');
+const usersFilePath = path.join(__dirname, '../../public/data/users.json');
 
-function readData(){
-    return JSON.parse(fs.readFileSync(jsonFilePath, 'utf-8'))
+function readData(filePath){
+    return JSON.parse(fs.readFileSync(filePath, 'utf-8'))
 }
 
-router.get('/', (req, res) => {
+
+router.get('/', checkSession, (req, res) => {
 
     // Make sure to add a default value in the case jsonData comes empty
-    const professorsData = readData().professors || []
+    const professorsData = readData(teachersFilePath).professors || []
 
     res.render('home', {
         title: "Home",
-        professors: professorsData
+        professors: professorsData,
+        user: req.session.user
     })
 })
 
 // Create new
-router.get('/teacher-form', (req, res) => {
+router.get('/teacher-form', checkSession, (req, res) => {
     res.render('teacher-form', {
         title: "Teacher form",
         name: null,
         description: null,
-        id: null
+        id: null,
+        user: req.session.user
     })
 })
 
 
 // Create new teacher
-router.post('/teacher-form/create', upload.single('avatar'), (req, res) => {
-    const data = readData()
+router.post('/teacher-form/create', checkSession, upload.single('avatar'), (req, res) => {
+    const data = readData(teachersFilePath)
 
     if(!req.body.name || !req.body.description){
         res.send(400).send('Entries must have a prof name and description')
@@ -64,14 +69,13 @@ router.post('/teacher-form/create', upload.single('avatar'), (req, res) => {
         // Add the new professor to the data.json file
         data.professors.push(newProfessor)
 
-        writeData(data)
+        writeData(data, teachersFilePath)
         res.redirect('/')
     }
 })
 
-router.get('/teacher-form/:id/edit',  (req, res) => {
-    const data = readData()
-    //console.log('data: ' + JSON.stringify(data, null, 2))
+router.get('/teacher-form/:id/edit', checkSession, (req, res) => {
+    const data = readData(teachersFilePath)
 
     // Find the element
     data.professors.forEach(teacher=> {
@@ -80,7 +84,8 @@ router.get('/teacher-form/:id/edit',  (req, res) => {
                 title: "Teacher Form",
                 name: teacher.name,
                 description: teacher.description,
-                id: teacher.id
+                id: teacher.id,
+                user: req.session.user
             })
         }
     });
@@ -88,8 +93,8 @@ router.get('/teacher-form/:id/edit',  (req, res) => {
 })
 
 // Modify an already existing teacher
-router.put('/teacher-form/:id/edit', upload.single('avatar'), (req, res) => {
-    const data = readData()
+router.put('/teacher-form/:id/edit', checkSession, upload.single('avatar'), (req, res) => {
+    const data = readData(teachersFilePath)
 
     if(!req.body.name || !req.body.description){
         res.send(400).send('Entries must have a prof name and description')
@@ -131,12 +136,12 @@ router.put('/teacher-form/:id/edit', upload.single('avatar'), (req, res) => {
         }
     });
 
-    writeData(data)
+    writeData(data, teachersFilePath)
     res.redirect('/')
 })
 
-router.delete('/teacher-form/:id/delete', (req, res) => {
-    const data = readData()
+router.delete('/teacher-form/:id/delete', checkSession, (req, res) => {
+    const data = readData(teachersFilePath)
 
     // Delete the teacher in the array
     const teacherIndex = data.professors.findIndex((teacher) => teacher.id == req.params.id)
@@ -157,16 +162,102 @@ router.delete('/teacher-form/:id/delete', (req, res) => {
     data.professors.splice(teacherIndex, 1)
 
     // Update the json file
-    writeData(data)
+    writeData(data, teachersFilePath)
     res.redirect('/')
 })
 
-function writeData(data){
+router.get('/login-form', (req, res ) => {
+    res.render('login-form',
+    {
+        title: 'login-form'
+    })
+})
+
+router.get('/log-out', (req, res ) => {
+    // Delete the session
+    delete req.session.email
+    res.render('login-form',
+    {
+        title: 'login-form'
+    })
+})
+
+router.delete('/delete-account/:id', (req, res ) => {
+    const data = readData(usersFilePath)
+
+    // Delete the teacher in the array
+    const userIndex = data.users.findIndex((user) => user.id == req.params.id)
+
+    // Delete from the array
+    data.users.splice(userIndex, 1)
+
+    // Update the json file
+    writeData(data, usersFilePath)
+    res.redirect('/login-form')
+})
+
+router.post('/login', (req, res) => {
+    const data = readData(usersFilePath)
+
+    if(data.users.length > 0){
+        data.users.forEach( user => {
+            if(req.body.email == user.email){
+                if(req.body.password == user.password){
+                    req.session.user = user
+                    res.redirect('/')
+                }else{
+                    res.send('User or password is incorrect')
+                }
+            }else{
+                res.send('User or password is incorrect')
+            }
+        })
+    }else{
+        res.send("User doesn't exist")
+    }
+    
+})
+
+router.get('/register-form', (req, res ) => {
+    res.render('register-form',
+    {
+        title: 'register-form'
+    })
+})
+
+router.post('/register-form/create', (req, res ) => {
+    const data = readData(usersFilePath)
+
+    if(!req.body.email || !req.body.password){
+        res.send(400).send('Entries must have an email and description')
+    }
+
+    let newUser = {
+        id: generateUniqueId(),
+        email: req.body.email,
+        password: req.body.password,
+    }
+
+    // Create a session variable
+    req.session.user = newUser
+
+    if(data != null){
+        
+        // Add the new professor to the data.json file
+        data.users.push(newUser)
+
+        writeData(data, usersFilePath)
+
+        res.redirect('/')
+    }
+})
+
+function writeData(data, filePath){
     // Convert the updated data back to JSON
     const updatedJsonDataString = JSON.stringify(data, null, 2);
 
     // Write the updated data back to the JSON file
-    fs.writeFile(jsonFilePath, updatedJsonDataString, 'utf8', (err) => {
+    fs.writeFile(filePath, updatedJsonDataString, 'utf8', (err) => {
         if (err) {
             console.error('Error writing file:', err);
             return;
