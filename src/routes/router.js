@@ -175,7 +175,7 @@ router.get('/login-form', (req, res ) => {
 
 router.get('/log-out', (req, res ) => {
     // Delete the session
-    delete req.session.email
+    delete req.session.user
     res.render('login-form',
     {
         title: 'login-form'
