@@ -26,7 +26,14 @@ router.get('/', (req, res) => {
     if(req.cookies.MyCookie){
         req.session.user = {email: req.cookies.MyCookie}
     }
-
+    /*
+    cookies = {
+        MyCookie: "fernandohazel1@gmail.com"
+    }
+    user = {
+        email: "fernandohazel1@gmail.com"
+    }*/
+    
     // Make sure to add a default value in the case jsonData comes empty
     const professorsData = readData(teachersFilePath).professors || []
 
@@ -35,6 +42,11 @@ router.get('/', (req, res) => {
         professors: professorsData,
         user: req.session.user ? req.session.user : {email: ""} //Verify if we have a user logged to show its email
     })
+
+    user = {
+        email: ""
+    }
+
 })
 
 // Create new
@@ -205,20 +217,27 @@ router.delete('/delete-account/:id', (req, res ) => {
 router.post('/login', (req, res) => {
     const data = readData(usersFilePath)
 
+    // If the db is not empty
     if(data.users.length > 0){
+
         data.users.forEach( user => {
+            // Look for the user email and compare with the one inserted in the login form
             if(req.body.email == user.email){
+
                 // Check hash
-                let check = bcrypt.compareSync(req.body.password, user.password);
+                let check = bcrypt.compareSync(req.body.password, user.password); //true false
+
+                // User and password are correct
                 if(check){
                     req.session.user = user
 
                     // Create cookie if checkbox is checked
+                    console.log('remember -> value: '+req.body.remember)
                     if(req.body.remember){
                         res.cookie('MyCookie', user.email, {
                             maxAge: 1000 * 60 * 60,
-                            //expires: new Date("2024-16-01"),
-                            //httpOnly: true //can't be accessed through the browser, can't see it in the dev tools
+                            //expires: new Date("2024-12-01"),
+                            //httpOnly: true, //can't be accessed through the browser, can't see it in the dev tools
                             //secure: true //only accessed by https (activate when deploy)
                         })
                     }
