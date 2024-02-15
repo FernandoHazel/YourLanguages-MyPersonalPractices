@@ -4,6 +4,7 @@ const fs = require('node:fs')
 const path = require('path')
 
 const upload = require('../middlewares/upload')
+const bcrypt = require('bcryptjs');
 
 // Import the middlewares
 const {how} = require('../middlewares/middle')
@@ -19,7 +20,12 @@ function readData(filePath){
 }
 
 
-router.get('/', checkSession, (req, res) => {
+router.get('/', (req, res) => {
+
+    //If we have a cookie create a session
+    if(req.cookies.MyCookie){
+        req.session.user = {email: req.cookies.MyCookie}
+    }
 
     // Make sure to add a default value in the case jsonData comes empty
     const professorsData = readData(teachersFilePath).professors || []
@@ -27,7 +33,7 @@ router.get('/', checkSession, (req, res) => {
     res.render('home', {
         title: "Home",
         professors: professorsData,
-        user: req.session.user
+        user: req.session.user ? req.session.user : {email: ""} //Verify if we have a user logged to show its email
     })
 })
 
@@ -202,8 +208,24 @@ router.post('/login', (req, res) => {
     if(data.users.length > 0){
         data.users.forEach( user => {
             if(req.body.email == user.email){
-                if(req.body.password == user.password){
+                // Check hash
+                let check = bcrypt.compareSync(req.body.password, user.password);
+                if(check){
                     req.session.user = user
+
+                    // Create cookie if checkbox is checked
+                    if(req.body.remember){
+                        res.cookie('MyCookie', user.email, {
+                            maxAge: 1000 * 60 * 60,
+                            //expires: new Date("2024-16-01"),
+                            //httpOnly: true //can't be accessed through the browser, can't see it in the dev tools
+                            //secure: true //only accessed by https (activate when deploy)
+                        })
+                    }
+
+                    //To delete a cookie use this code
+                    //res.clearCookie('MyCookie')
+
                     res.redirect('/')
                 }else{
                     res.send('User or password is incorrect')
@@ -218,28 +240,28 @@ router.post('/login', (req, res) => {
     
 })
 
-router.get('/register-form', (req, res ) => {
+router.get('/register-form', (req, res) => {
     res.render('register-form',
     {
         title: 'register-form'
     })
 })
 
-router.post('/register-form/create', (req, res ) => {
+router.post('/register-form/create', (req, res) => {
     const data = readData(usersFilePath)
 
     if(!req.body.email || !req.body.password){
         res.send(400).send('Entries must have an email and description')
     }
 
-    let newUser = {
+    // hash password
+    let hash = bcrypt.hashSync(req.body.password, 10);
+
+    const newUser = {
         id: generateUniqueId(),
         email: req.body.email,
-        password: req.body.password,
+        password: hash,
     }
-
-    // Create a session variable
-    req.session.user = newUser
 
     if(data != null){
         
@@ -248,6 +270,8 @@ router.post('/register-form/create', (req, res ) => {
 
         writeData(data, usersFilePath)
 
+        // Create a session variable
+        req.session.user = newUser
         res.redirect('/')
     }
 })

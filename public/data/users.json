@@ -1,3 +1,9 @@
 {
-  "users": []
+  "users": [
+    {
+      "id": "1707953822338-672",
+      "email": "fernandohazel1@gmail.com",
+      "password": "$2a$10$HEHWqCK4OgAPxnEaVNoqJe3Ralx2qURiqhrTdQUvW7E.yOeq.eDcG"
+    }
+  ]
 }

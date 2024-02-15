@@ -6,6 +6,7 @@ const express = require('express')
 const app = express()
 
 const session = require('express-session')
+const cookieParser = require('cookie-parser')
 
 // Override form methods
 const methodOverride = require('method-override')
@@ -29,6 +30,7 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
 app.use(morgan('dev'))
+app.use(cookieParser())
 app.use(bp.json())
 app.use(bp.urlencoded({extended:false}))
 app.use(express.static(path.join(__dirname, '../public')))

@@ -3,7 +3,6 @@
     <%- include ('partials/head.ejs') %>
 <body class="container">
     <%- include ('partials/header.ejs') %>
-    <!--<img src="/uploads/1707404900248_Yo.jpg">-->
     <%if(professors.length){ %>
         <% professors.forEach(function(professor) { %>
             <div class="panel panel-primary" style="margin: 3px;">
@@ -13,9 +12,9 @@
                     <div>
                         <%= professor.id %>
                         <a href="/teacher-form/<%= professor.id %>/edit" class="btn btn-primary pull-right" style="background-color: gray;">Modify</a>
-                        <form action="/teacher-form/<%= professor.id %>/delete?_method=DELETE" method="POST" class="btn btn-primary pull-right" style="background-color: red;">
+                        <form action="/teacher-form/<%= professor.id %>/delete?_method=DELETE" method="POST" class="btn pull-right">
                             <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit">Delete</button>
+                            <button type="submit" style="background-color: red; border-radius: 5px;">Delete</button>
                         </form>
                     </div>
                     
