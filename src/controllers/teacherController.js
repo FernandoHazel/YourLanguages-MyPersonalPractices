@@ -11,42 +11,32 @@ const teacherController = {
         if(req.cookies.MyCookie){
             req.session.user = {email: req.cookies.MyCookie}
         }
-        /*
-        cookies = {
-            MyCookie: "fernandohazel1@gmail.com"
-        }
-        user = {
-            email: "fernandohazel1@gmail.com"
-        }*/
         
         // Make sure to add a default value in the case jsonData comes empty
-        const professorsData = readData(teachersFilePath).professors || []
-    
+        const teachersData = readData(teachersFilePath).teachers || []
+
         res.render('home', {
             title: "Home",
-            professors: professorsData,
-            user: req.session.user ? req.session.user : {email: ""} //Verify if we have a user logged to show its email
+            teachers: teachersData,
+            user:  req.session.user ? req.session.user : {email: ""}
         })
-    
-        user = {
-            email: ""
-        }
     
     },
     goToTeacherForm: (req, res) => {
+
         res.render('teacher-form', {
             title: "Teacher form",
             name: null,
             description: null,
             id: null,
-            user: req.session.user
+            user: req.session.user ? req.session.user : {email: ""}
         })
     },
     createTeacher: (req, res) => {
         const data = readData(teachersFilePath)
     
         if(!req.body.name || !req.body.description){
-            res.send(400).send('Entries must have a prof name and description')
+            res.status(400).send('Entries must have a prof name and description');
         }
     
         // Verify that the file string is not null
@@ -56,7 +46,7 @@ const teacherController = {
         if (imagePath != '')
             imagePath = imagePath.replace(/^public\\/, '');
     
-        let newProfessor = {
+        let newTeacher = {
             id: generateUniqueId(),
             name: req.body.name,
             description: req.body.description,
@@ -65,24 +55,25 @@ const teacherController = {
     
         if(data != null){
             // Add the new professor to the data.json file
-            data.professors.push(newProfessor)
+            data.teachers.push(newTeacher)
     
             writeData(data, teachersFilePath)
+
             res.redirect('/')
         }
     },
     goToEditForm: (req, res) => {
         const data = readData(teachersFilePath)
-    
+
         // Find the element
-        data.professors.forEach(teacher=> {
+        data.teachers.forEach(teacher=> {
             if(teacher.id == req.params.id){
                 res.render('teacher-form', {
                     title: "Teacher Form",
                     name: teacher.name,
                     description: teacher.description,
                     id: teacher.id,
-                    user: req.session.user
+                    user: req.session.user ? req.session.user : {email: ""}
                 })
             }
         });
@@ -92,7 +83,7 @@ const teacherController = {
         const data = readData(teachersFilePath)
     
         if(!req.body.name || !req.body.description){
-            res.send(400).send('Entries must have a prof name and description')
+            res.status(400).send('Entries must have a prof name and description');
         }
     
         // Look for the element in the db and update it
@@ -132,16 +123,17 @@ const teacherController = {
         });
     
         writeData(data, teachersFilePath)
+
         res.redirect('/')
     },
     deleteTeacher: (req, res) => {
         const data = readData(teachersFilePath)
     
         // Delete the teacher in the array
-        const teacherIndex = data.professors.findIndex((teacher) => teacher.id == req.params.id)
+        const teacherIndex = data.teachers.findIndex((teacher) => teacher.id == req.params.id)
     
         // Take the file path to delete the file
-        const filePath = path.join(__dirname, `../../public/${data.professors[teacherIndex].imagePath}`) 
+        const filePath = path.join(__dirname, `../../public/${data.teachers[teacherIndex].imagePath}`) 
     
         // Delete the image file
         fs.unlink(filePath, (err) => {
@@ -153,10 +145,11 @@ const teacherController = {
         });
     
         // Delete from the array
-        data.professors.splice(teacherIndex, 1)
+        data.teachers.splice(teacherIndex, 1)
     
         // Update the json file
         writeData(data, teachersFilePath)
+
         res.redirect('/')
     }
 }

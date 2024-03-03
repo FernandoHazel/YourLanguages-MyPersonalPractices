@@ -3,16 +3,16 @@
     <%- include ('partials/head.ejs') %>
 <body class="container">
     <%- include ('partials/header.ejs') %>
-    <%if(professors.length){ %>
-        <% professors.forEach(function(professor) { %>
+    <%if(teachers.length){ %>
+        <% teachers.forEach(function(teacher) { %>
             <div class="panel panel-primary" style="margin: 3px;">
                 <div class="panel-heading" style="background-color: rgb(21, 21, 243); color: white; border-radius: 5px; display: flex; justify-content: space-between; align-items: center;">
-                    <img style="border-radius: 50%; width: 50px; height: 50px;" src=<%= professor.imagePath %>>
-                    <%= professor.name %>
+                    <img style="border-radius: 50%; width: 50px; height: 50px;" src=<%= teacher.imagePath %>>
+                    <%= teacher.name %>
                     <div>
-                        <%= professor.id %>
-                        <a href="/teacher-form/<%= professor.id %>/edit" class="btn btn-primary pull-right" style="background-color: gray;">Modify</a>
-                        <form action="/teacher-form/<%= professor.id %>/delete?_method=DELETE" method="POST" class="btn pull-right">
+                        <%= teacher.id %>
+                        <a href="/teacher-form/<%= teacher.id %>/edit" class="btn btn-primary pull-right" style="background-color: gray;">Modify</a>
+                        <form action="/teacher-form/<%= teacher.id %>/delete?_method=DELETE" method="POST" class="btn pull-right">
                             <input type="hidden" name="_method" value="DELETE">
                             <button type="submit" style="background-color: red; border-radius: 5px;">Delete</button>
                         </form>
@@ -20,7 +20,7 @@
                     
                 </div>
                 <div class="panel-body" style="border-radius: 5px; border: 1px solid #000;">
-                    <%= professor.description %>
+                    <%= teacher.description %>
                 </div>
             </div>
        <% }) %>
