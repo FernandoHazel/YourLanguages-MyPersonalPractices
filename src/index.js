@@ -37,18 +37,13 @@ app.use(express.static(path.join(__dirname, '../public')))
 console.log(path.join(__dirname, '../public'))
 
 app.use(session({
-    secret: 'my_secret',
+    secret: 'My secret',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
         secure: false, // Change to true if using HTTPS
     },
 }))
-
-/*app.use((req, res, next) => {
-    res.sendStatus(404)
-    next()
-})*/
 
 // Set the router
 app.use('/', require(path.join(__dirname, 'routes/router')))

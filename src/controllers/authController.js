@@ -31,6 +31,8 @@ const {readData, writeData, generateUniqueId} = require('./dataController')
     
         // Update the json file
         writeData(data, usersFilePath)
+
+        delete req.session.user
         res.redirect('/login-form')
     },
     login: (req, res) => {
@@ -58,14 +60,8 @@ const {readData, writeData, generateUniqueId} = require('./dataController')
                             if(req.body.remember){
                                 res.cookie('MyCookie', user.email, {
                                     maxAge: 1000 * 60 * 60,
-                                    //expires: new Date("2024-12-01"),
-                                    //httpOnly: true, //can't be accessed through the browser, can't see it in the dev tools
-                                    //secure: true //only accessed by https (activate when deploy)
                                 })
                             }
-    
-                            //To delete a cookie use this code
-                            //res.clearCookie('MyCookie')
     
                             res.redirect('/')
                         }else{

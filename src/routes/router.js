@@ -12,11 +12,11 @@ const teacherController = require('../controllers/teacherController')
 
 // Teacher routes
 router.get('/', teacherController.goToHome)
-router.get('/teacher-form', checkSession, teacherController.goToTeacherForm)
-router.post('/teacher-form/create', checkSession, upload.single('avatar'), teacherController.createTeacher)
-router.get('/teacher-form/:id/edit', checkSession, teacherController.goToEditForm)
-router.put('/teacher-form/:id/edit', checkSession, upload.single('avatar'), teacherController.editTeacherById)
-router.delete('/teacher-form/:id/delete', checkSession, teacherController.deleteTeacher)
+router.get('/teacher-form',  teacherController.goToTeacherForm)
+router.post('/teacher-form/create',  upload.single('avatar'), teacherController.createTeacher)
+router.get('/teacher-form/:id/edit',  teacherController.goToEditForm)
+router.put('/teacher-form/:id/edit',  upload.single('avatar'), teacherController.editTeacherById)
+router.delete('/teacher-form/:id/delete',  teacherController.deleteTeacher)
 
 // Auth routes
 router.get('/login-form', authController.goToLogin)

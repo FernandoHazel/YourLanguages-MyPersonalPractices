@@ -7,6 +7,8 @@ const {readData, writeData, generateUniqueId} = require('./dataController')
 const teacherController = {
     goToHome: (req, res) => {
 
+        console.log("Session value (/)-> "+req.session.user)
+
         //If we have a cookie create a session
         if(req.cookies.MyCookie){
             req.session.user = {email: req.cookies.MyCookie}
@@ -23,6 +25,11 @@ const teacherController = {
     
     },
     goToTeacherForm: (req, res) => {
+
+        //If we have a cookie create a session
+        if(req.cookies.MyCookie){
+            req.session.user = {email: req.cookies.MyCookie}
+        }
 
         res.render('teacher-form', {
             title: "Teacher form",
@@ -59,10 +66,23 @@ const teacherController = {
     
             writeData(data, teachersFilePath)
 
+            console.log("user after creating - "+ req.session.user)
+
+            req.session.user = {
+                "id": "1708568417370-500",
+                "email": "fernandohazel1@gmail.com",
+                "password": "$2a$10$yPVnfGUsJvn40SoNREH9luEoIRf/3WDEMWscP/xts4ovKSuInfkba"
+              }
             res.redirect('/')
         }
     },
     goToEditForm: (req, res) => {
+
+        //If we have a cookie create a session
+        if(req.cookies.MyCookie){
+            req.session.user = {email: req.cookies.MyCookie}
+        }
+
         const data = readData(teachersFilePath)
 
         // Find the element
@@ -87,7 +107,7 @@ const teacherController = {
         }
     
         // Look for the element in the db and update it
-        data.professors.forEach(teacher => {
+        data.teachers.forEach(teacher => {
             if( teacher.id == req.params.id ){
                 teacher.name = req.body.name
                 teacher.description = req.body.description
@@ -103,9 +123,9 @@ const teacherController = {
                     // Delete the image file
                     fs.unlink(filePath, (err) => {
                         if (err) {
-                        console.error(`Error deleting file: ${err.message}`);
+                            console.error(`Error deleting file: ${err.message}`);
                         } else {
-                        console.log(`File deleted successfully`);
+                            console.log(`File deleted successfully`);
                         }
                     });
     
@@ -150,6 +170,11 @@ const teacherController = {
         // Update the json file
         writeData(data, teachersFilePath)
 
+        req.session.user = {
+            "id": "1708568417370-500",
+            "email": "fernandohazel1@gmail.com",
+            "password": "$2a$10$yPVnfGUsJvn40SoNREH9luEoIRf/3WDEMWscP/xts4ovKSuInfkba"
+          }
         res.redirect('/')
     }
 }
