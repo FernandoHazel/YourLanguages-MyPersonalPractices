@@ -1,16 +1,3 @@
 {
-  "teachers": [
-    {
-      "id": "1709483967681-295",
-      "name": "Fer",
-      "description": "Fer",
-      "imagePath": "uploads\\1709483967674_foto.jpg"
-    },
-    {
-      "id": "1709486524987-883",
-      "name": "Fer",
-      "description": "Fer",
-      "imagePath": "uploads\\1709817481308_foto.jpg"
-    }
-  ]
+  "teachers": []
 }

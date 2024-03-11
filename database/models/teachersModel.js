@@ -5,10 +5,10 @@ const col = {
     id: {
         type: DataTypes.INTEGER
     },
-    name: {
+    email: {
         type: DataTypes.STRING
     },
-    description: {
+    password: {
         type: DataTypes.STRING
     }
 }

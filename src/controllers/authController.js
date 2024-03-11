@@ -5,7 +5,10 @@ const usersFilePath = path.join(__dirname, '../../public/data/users.json')
 const { validationResult } = require('express-validator')
 const {readData, writeData, generateUniqueId} = require('./dataController')
 
- const authController = {
+//Require the model for the server
+const User = require('../../public/data/userModel')
+
+const authController = {
     goToLogin: (req, res ) => {
         res.render('login-form',
         {
@@ -102,6 +105,7 @@ const {readData, writeData, generateUniqueId} = require('./dataController')
             // hash password
             let hash = bcrypt.hashSync(req.body.password, 10);
     
+            //Using the model instead of declaring the variable
             const newUser = {
                 id: generateUniqueId(),
                 email: req.body.email,

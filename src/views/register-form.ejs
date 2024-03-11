@@ -10,15 +10,54 @@
             <div class="form">
                 <h2 class="text-center">Register</h2>
                 <div style="display: flex; flex-direction: column;">
-                    <input class="form-group" type="text" name="email" placeholder="email@example.com" autofocus style="margin: 5px;" value="<%= locals.old && old.email %>">
+
+                    <input class="form-group" type="text" name="name" placeholder="Fernando" 
+                    autofocus style="margin: 5px;" value="<%= locals.old && old.name %>" required>
+                    <% if (locals.errors && errors.name) { %> 
+                        <p class="feedback"><%= errors.name.msg %></p> 
+                        <% } %>
+
+                    <input class="form-group" type="text" name="lastName" placeholder="Ascencio" 
+                    autofocus style="margin: 5px;" value="<%= locals.old && old.lastName %>" required>
+                    <% if (locals.errors && errors.name) { %> 
+                        <p class="feedback"><%= errors.name.msg %></p> 
+                        <% } %>
+
+                    <input class="form-group" type="text" name="email" placeholder="email@example.com"
+                     autofocus style="margin: 5px;" value="<%= locals.old && old.email %>" required>
                     <% if (locals.errors && errors.email) { %> 
                         <p class="feedback"><%= errors.email.msg %></p> 
                         <% } %>
-                    <input class="form-group" type="password" name="password" style="margin: 5px;">
+
+                    <input class="form-group" type="password" name="password" style="margin: 5px;" required>
                     <% if (locals.errors && errors.password) { %> 
                         <p class="feedback"><%= errors.password.msg %></p> 
                         <% } %>
+                    
+                    <input type="file" name="avatar"/>
+
+                    <!-- Option buttons to select account type -->
+                    <label for="remember">Account Type</label>
+                    <label>
+                        <input type="radio" name="accountType" value="teacher" required> Teacher
+                    </label>
+                    <label>
+                        <input type="radio" name="accountType" value="student" required> Student
+                    </label>
+
+                    <label for="remember">Gender</label>
+                    <label>
+                        <input type="radio" name="Gender" value="Male" required> Male
+                    </label>
+                    <label>
+                        <input type="radio" name="Gender" value="Female" required> Female
+                    </label>
+                    <label>
+                        <input type="radio" name="Gender" value="Other" required> Other
+                    </label>
                 </div>
+
+                
 
                 <p class="remember">
                     <input type="checkbox" id="remember" name="remember" value="1" />
