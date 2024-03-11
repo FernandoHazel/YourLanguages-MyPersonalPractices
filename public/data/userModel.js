@@ -1,5 +1,5 @@
 class User {
-    constructor(id, name, lastName, email, gender, userType, hashedPassword) {
+    constructor(id, name, lastName, email, gender, userType, hashedPassword, imagePath) {
         this.id = id
         this.name = name
         this.lastName = lastName
@@ -7,6 +7,7 @@ class User {
         this.gender = gender
         this.userType = userType
         this.hashedPassword = hashedPassword
+        this.imagePath = imagePath
     }
 }
 

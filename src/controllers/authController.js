@@ -104,13 +104,25 @@ const authController = {
         if(errors.isEmpty()){
             // hash password
             let hash = bcrypt.hashSync(req.body.password, 10);
+
+            // Verify that the file string is not null
+            let imagePath = req.file ? req.file.path : '';
+        
+            // Delete the "public" word
+            if (imagePath != '')
+                imagePath = imagePath.replace(/^public\\/, '');
     
             //Using the model instead of declaring the variable
-            const newUser = {
-                id: generateUniqueId(),
-                email: req.body.email,
-                password: hash,
-            }
+            const newUser = new User(
+                generateUniqueId(),
+                req.body.name,
+                req.body.lastName,
+                req.body.email,
+                req.body.gender,
+                req.body.userType,
+                hash,
+                imagePath
+            )
     
             if(data != null){
                 

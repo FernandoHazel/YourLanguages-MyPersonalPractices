@@ -5,7 +5,7 @@
 
     <div style="padding: 200px;">
 
-        <form method="post" action="/register-form/create">
+        <form method="post" action="/register-form/create"><!--enctype="multipart/form-data"-->
 
             <div class="form">
                 <h2 class="text-center">Register</h2>
@@ -34,30 +34,30 @@
                         <p class="feedback"><%= errors.password.msg %></p> 
                         <% } %>
                     
+<!--Other important thing that we can add is a second password field and verify that both are the same-->
+                    
                     <input type="file" name="avatar"/>
 
                     <!-- Option buttons to select account type -->
                     <label for="remember">Account Type</label>
                     <label>
-                        <input type="radio" name="accountType" value="teacher" required> Teacher
+                        <input type="radio" name="userType" value="teacher" required> Teacher
                     </label>
                     <label>
-                        <input type="radio" name="accountType" value="student" required> Student
+                        <input type="radio" name="userType" value="student" required> Student
                     </label>
 
                     <label for="remember">Gender</label>
                     <label>
-                        <input type="radio" name="Gender" value="Male" required> Male
+                        <input type="radio" name="gender" value="male" required> Male
                     </label>
                     <label>
-                        <input type="radio" name="Gender" value="Female" required> Female
+                        <input type="radio" name="gender" value="female" required> Female
                     </label>
                     <label>
-                        <input type="radio" name="Gender" value="Other" required> Other
+                        <input type="radio" name="gender" value="other" required> Other
                     </label>
                 </div>
-
-                
 
                 <p class="remember">
                     <input type="checkbox" id="remember" name="remember" value="1" />

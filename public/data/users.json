@@ -1,9 +1,14 @@
 {
   "users": [
     {
-      "id": "1710131238352-13",
+      "id": "1710133767268-30",
+      "name": "Fer",
+      "lastName": "Ascencio",
       "email": "fernandohazel1@gmail.com",
-      "password": "$2a$10$T4zdJ..XjmjQYfHP6qBRbO6c/9p130liiRAwUMF/vXKOkFDG9JMA2"
+      "gender": "male",
+      "userType": "teacher",
+      "hashedPassword": "$2a$10$ze/tZgb0fvailB7edc1P0uJ8xVP/B2fF9u3R89X27ia5Z.FAlFMr.",
+      "imagePath": ""
     }
   ]
 }
