@@ -24,6 +24,6 @@ router.get('/log-out', authController.logOut)
 router.delete('/delete-account/:id', authController.deleteUserById)
 router.post('/login', loginValidations, authController.login)
 router.get('/register-form', authController.goToSingUpForm)
-router.post('/register-form/create', singUpValidations, upload.single('avatar'), authController.singUp)
-
+router.post('/register-form/create', upload.single('avatar'), singUpValidations, authController.singUp)
+//singUpValidations,
 module.exports = router

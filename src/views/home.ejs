@@ -3,25 +3,23 @@
     <%- include ('partials/head.ejs') %>
 <body class="container">
     <%- include ('partials/header.ejs') %>
-    <%if(teachers.length){ %>
-        <% teachers.forEach(function(teacher) { %>
+    <%if(users.length){ %>
+        <% users.forEach(function(user) { %>
             <div class="panel panel-primary" style="margin: 3px;">
-                <div class="panel-heading" style="background-color: rgb(21, 21, 243); color: white; border-radius: 5px; display: flex; justify-content: space-between; align-items: center;">
-                    <img style="border-radius: 50%; width: 50px; height: 50px;" src=<%= teacher.imagePath %>>
-                    <%= teacher.name %>
-                    <div>
-                        <%= teacher.id %>
-                        <a href="/teacher-form/<%= teacher.id %>/edit" class="btn btn-primary pull-right" style="background-color: gray;">Modify</a>
-                        <form action="/teacher-form/<%= teacher.id %>/delete?_method=DELETE" method="POST" class="btn pull-right">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit" style="background-color: red; border-radius: 5px;">Delete</button>
-                        </form>
+
+                <div class="panel-heading" style="background-color: rgb(61, 61, 248); display: flex; flex-direction: row;">
+                    <img style=" width: 50px; height: 50px;" src=<%= user.imagePath %>>
+                    <div style="color: white; display: flex; justify-content: space-around;  align-items: center; width: 100%;" >
+                        <div>
+                            </label><%= user.name %></label>
+                            </label><%= user.lastName %></label>
+                        </div>
+                        </label><%= user.email %></label>
+                        <label style="color: red;"><%= user.userType%></label>
                     </div>
-                    
                 </div>
-                <div class="panel-body" style="border-radius: 5px; border: 1px solid #000;">
-                    <%= teacher.description %>
-                </div>
+                
+                
             </div>
        <% }) %>
     <% } %>

@@ -1,7 +1,7 @@
 const fs = require('node:fs')
 const path = require('path')
 
-const teachersFilePath = path.join(__dirname, '../../public/data/data.json');
+const usersFilePath = path.join(__dirname, '../../public/data/users.json');
 const {readData, writeData, generateUniqueId} = require('./dataController')
 
 const teacherController = {
@@ -15,11 +15,11 @@ const teacherController = {
         }
         
         // Make sure to add a default value in the case jsonData comes empty
-        const teachersData = readData(teachersFilePath).teachers || []
+        const users = readData(usersFilePath).users || []
 
         res.render('home', {
             title: "Home",
-            teachers: teachersData,
+            users: users,
             user:  req.session.user ? req.session.user : {email: ""}
         })
     

@@ -37,9 +37,9 @@ app.use(express.static(path.join(__dirname, '../public')))
 console.log(path.join(__dirname, '../public'))
 
 app.use(session({
-    secret: 'My secret',
-    resave: false,
-    saveUninitialized: false,
+    secret: 'my_secret',
+    resave: true,
+    saveUninitialized: true,
     cookie: {
         secure: false, // Change to true if using HTTPS
     },

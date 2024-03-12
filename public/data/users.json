@@ -1,14 +1,44 @@
 {
   "users": [
     {
-      "id": "1710133767268-30",
-      "name": "Fer",
+      "id": "1710210227585-934",
+      "name": "Fernando",
       "lastName": "Ascencio",
       "email": "fernandohazel1@gmail.com",
       "gender": "male",
       "userType": "teacher",
-      "hashedPassword": "$2a$10$ze/tZgb0fvailB7edc1P0uJ8xVP/B2fF9u3R89X27ia5Z.FAlFMr.",
-      "imagePath": ""
+      "hashedPassword": "$2a$10$99ajfXJiDdXeejjo9DK3Jenoj1dSfsZOGF6UKxVWaawrgE9SwhN5a",
+      "imagePath": "uploads\\1710210227503_foto.jpg"
+    },
+    {
+      "id": "1710210630103-276",
+      "name": "Liann",
+      "lastName": "Heymann",
+      "email": "Lian@gmail.com",
+      "gender": "female",
+      "userType": "student",
+      "hashedPassword": "$2a$10$pz3ujmUNWs4RKfFeFsL2SeAgyPUHyrle3wsp9SwGVrt4Dkkir3nqq",
+      "imagePath": "uploads\\1710210630018_Demonition.PNG"
+    },
+    {
+      "id": "1710210767567-412",
+      "name": "Daniel",
+      "lastName": "Wienke",
+      "email": "Daniel@gmail.com",
+      "gender": "male",
+      "userType": "student",
+      "hashedPassword": "$2a$10$BDO2mn6mfI8CpSUIwEQCceC9c49IyCtuaB1rhzoNS84brVlbWghki",
+      "imagePath": "uploads\\1710210767480_Daniel.jpeg"
+    },
+    {
+      "id": "1710210814658-983",
+      "name": "Alan",
+      "lastName": "Guerra",
+      "email": "Alan@gmail.com",
+      "gender": "male",
+      "userType": "teacher",
+      "hashedPassword": "$2a$10$7i2jCBCCw5IDiRtMIpoc..x//.ayPq8PYkbcPP6wS0FmdioWUtNZe",
+      "imagePath": "uploads\\1710210814505_Kevin_3DModeler.jpg"
     }
   ]
 }
