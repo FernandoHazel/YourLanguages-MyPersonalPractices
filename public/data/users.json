@@ -39,6 +39,26 @@
       "userType": "teacher",
       "hashedPassword": "$2a$10$7i2jCBCCw5IDiRtMIpoc..x//.ayPq8PYkbcPP6wS0FmdioWUtNZe",
       "imagePath": "uploads\\1710210814505_Kevin_3DModeler.jpg"
+    },
+    {
+      "id": "1710214826477-775",
+      "name": "Oscar",
+      "lastName": "Hernandez",
+      "email": "oscar@gmail.com",
+      "gender": "male",
+      "userType": "student",
+      "hashedPassword": "$2a$10$oKFCZfBydwgkMF4BggvKae6CwGUGk4Kx.CJQuFecC33zpYHEEIYEG",
+      "imagePath": "uploads\\1710214826412_JoseRoberto.jpg"
+    },
+    {
+      "id": "1710215163166-962",
+      "name": "Elena",
+      "lastName": "Ramirez",
+      "email": "elena@gmail.com",
+      "gender": "female",
+      "userType": "student",
+      "hashedPassword": "$2a$10$8bQAuPOhRkfQp0ftJEoh1.YhMmHO2gJbycIk8MHpLK8KtzHLtb.Y6",
+      "imagePath": "uploads\\1710215163099_Rashel.jpeg"
     }
   ]
 }

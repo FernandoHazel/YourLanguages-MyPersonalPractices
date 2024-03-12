@@ -1,6 +1,9 @@
 // This is the entry point of the app
 // (The first file to execute when the app starts).
 
+// Require the necessary to work with database
+const sequelize = require('../database/database')
+
 // Require and instance express.
 const express = require('express')
 const app = express()
@@ -53,6 +56,21 @@ app.use('/', require(path.join(__dirname, 'routes/router')))
 app.set('port', process.env.PORT || 3000)
 
 // The server must listen in a port
-app.listen(app.get('port'), () => {
-    console.log(`server listening on port ${app.get('port')}`)
-})
+async function main(){
+
+    try {
+        await sequelize.authenticate();
+        console.log('Connection has been established successfully.');
+    } catch (error) {
+        console.error('Unable to connect to the database:', error);
+    }
+
+    app.listen(app.get('port'), () => {
+        console.log(`server listening on port ${app.get('port')}`)
+    })
+}
+
+// Remember to call the main function to start the server
+main()
+
+

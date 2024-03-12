@@ -3,25 +3,63 @@
     <%- include ('partials/head.ejs') %>
 <body class="container">
     <%- include ('partials/header.ejs') %>
-    <%if(users.length){ %>
-        <% users.forEach(function(user) { %>
-            <div class="panel panel-primary" style="margin: 3px;">
 
-                <div class="panel-heading" style="background-color: rgb(61, 61, 248); display: flex; flex-direction: row;">
-                    <img style=" width: 50px; height: 50px;" src=<%= user.imagePath %>>
-                    <div style="color: white; display: flex; justify-content: space-around;  align-items: center; width: 100%;" >
-                        <div>
-                            </label><%= user.name %></label>
-                            </label><%= user.lastName %></label>
+    <%if(users.length){ %>
+
+        <!--Show only the oposite type of users of the actual user (If a student logs he/she only see teachers displayed)-->
+        <% if (user.userType === "teacher") { %>
+            <% users.filter(element => element.userType === "student").forEach(student => { %>
+                <div class="panel panel-primary" style="margin: 3px;">
+                    <div class="panel-heading" style="background-color: rgb(61, 61, 248); display: flex; flex-direction: row;">
+                        <img style="width: 50px; height: 50px;" src=<%= student.imagePath %>>
+                        <div style="color: white; display: flex; justify-content: space-around; align-items: center; width: 100%;">
+                            <div>
+                                <label><%= student.name %></label>
+                                <label><%= student.lastName %></label>
+                            </div>
+                            <label><%= student.email %></label>
+                            <label style="color: red;"><%= student.userType %></label>
                         </div>
-                        </label><%= user.email %></label>
-                        <label style="color: red;"><%= user.userType%></label>
                     </div>
                 </div>
-                
-                
-            </div>
-       <% }) %>
+            <% }) %>
+        <% } else if(user.userType === "student") { %>
+            <% users.filter(element => element.userType === "teacher").forEach(teacher => { %>
+                <div class="panel panel-primary" style="margin: 3px;">
+                    <div class="panel-heading" style="background-color: rgb(61, 61, 248); display: flex; flex-direction: row;">
+                        <img style="width: 50px; height: 50px;" src=<%= teacher.imagePath %>>
+                        <div style="color: white; display: flex; justify-content: space-around; align-items: center; width: 100%;">
+                            <div>
+                                <label><%= teacher.name %></label>
+                                <label><%= teacher.lastName %></label>
+                            </div>
+                            <label><%= teacher.email %></label>
+                            <label style="color: red;"><%= teacher.userType %></label>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        <%} else { %>
+            <% users.forEach(function(element) { %>
+                    <div class="panel panel-primary" style="margin: 3px;">
+    
+                        <div class="panel-heading" style="background-color: rgb(61, 61, 248); display: flex; flex-direction: row;">
+                            <img style=" width: 50px; height: 50px;" src=<%= element.imagePath %>>
+                            <div style="color: white; display: flex; justify-content: space-around;  align-items: center; width: 100%;" >
+                                <div>
+                                    </label><%= element.name %></label>
+                                    </label><%= element.lastName %></label>
+                                </div>
+                                </label><%= element.email %></label>
+                                <label style="color: red;"><%= element.userType%></label>
+                            </div>
+                        </div>
+                        
+                    </div>            
+           <% }) %>
+        <%} %>
+
+        
     <% } %>
     
 </body>

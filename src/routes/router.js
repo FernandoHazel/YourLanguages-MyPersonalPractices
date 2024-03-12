@@ -8,17 +8,9 @@ const upload = require('../middlewares/upload')
 
 // Controllers
 const authController = require('../controllers/authController')
-const teacherController = require('../controllers/teacherController')
-
-// Teacher routes
-router.get('/', teacherController.goToHome)
-router.get('/teacher-form',  teacherController.goToTeacherForm)
-router.post('/teacher-form/create', upload.single('avatar'), teacherController.createTeacher)
-router.get('/teacher-form/:id/edit', teacherController.goToEditForm)
-router.put('/teacher-form/:id/edit', upload.single('avatar'), teacherController.editTeacherById)
-router.delete('/teacher-form/:id/delete', teacherController.deleteTeacher)
 
 // Auth routes
+router.get('/', authController.goToHome)
 router.get('/login-form', authController.goToLogin)
 router.get('/log-out', authController.logOut)
 router.delete('/delete-account/:id', authController.deleteUserById)

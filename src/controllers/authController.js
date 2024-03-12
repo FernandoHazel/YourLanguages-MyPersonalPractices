@@ -7,8 +7,28 @@ const {readData, writeData, generateUniqueId} = require('./dataController')
 
 //Require the model for the server
 const User = require('../../public/data/userModel')
+//Require the model for the database
 
 const authController = {
+    goToHome: (req, res) => {
+
+        console.log("Session value (/)-> "+req.session.user)
+
+        //If we have a cookie create a session
+        if(req.cookies.MyCookie){
+            req.session.user = {email: req.cookies.MyCookie}
+        }
+        
+        // Make sure to add a default value in the case jsonData comes empty
+        const users = readData(usersFilePath).users || []
+
+        res.render('home', {
+            title: "Home",
+            users: users,
+            user:  req.session.user ? req.session.user : {email: ""}
+        })
+    
+    },
     goToLogin: (req, res ) => {
         res.render('login-form',
         {
@@ -50,9 +70,9 @@ const authController = {
                 data.users.forEach( user => {
                     // Look for the user email and compare with the one inserted in the login form
                     if(req.body.email == user.email){
-    
+                        console.log(user.email)
                         // Check hash
-                        let check = bcrypt.compareSync(req.body.password, user.password); //true false
+                        let check = bcrypt.compareSync(req.body.password, user.hashedPassword); //true false
     
                         // User and password are correct
                         if(check){
@@ -70,8 +90,6 @@ const authController = {
                         }else{
                             res.send('User or password is incorrect')
                         }
-                    }else{
-                        res.send('User or password is incorrect')
                     }
                 })
             }else{
