@@ -3,6 +3,8 @@
 
 // Require the necessary to work with database
 const sequelize = require('../database/database')
+const User = require('../database/models/User')
+const UserType = require('../database/models/UserType')
 
 // Require and instance express.
 const express = require('express')
@@ -61,6 +63,7 @@ async function main(){
     try {
         await sequelize.authenticate();
         console.log('Connection has been established successfully.');
+        await sequelize.sync({force: true})
     } catch (error) {
         console.error('Unable to connect to the database:', error);
     }

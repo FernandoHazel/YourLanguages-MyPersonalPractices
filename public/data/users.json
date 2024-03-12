@@ -59,6 +59,16 @@
       "userType": "student",
       "hashedPassword": "$2a$10$8bQAuPOhRkfQp0ftJEoh1.YhMmHO2gJbycIk8MHpLK8KtzHLtb.Y6",
       "imagePath": "uploads\\1710215163099_Rashel.jpeg"
+    },
+    {
+      "id": "1710248633286-896",
+      "name": "Ana",
+      "lastName": "Ramirez",
+      "email": "ana@gmail.com",
+      "gender": "female",
+      "userType": "teacher",
+      "hashedPassword": "$2a$10$.30pVspjKCh3diY5s4EEAuD1ngqpV6aZG9wJF48wzmT4TE7VJcJc6",
+      "imagePath": "uploads\\1710248633224_liann.jpg"
     }
   ]
 }
